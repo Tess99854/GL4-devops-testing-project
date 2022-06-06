@@ -24,4 +24,4 @@ jobs:
       run: docker login -u $username -p $password
 
     - name: Docker Push
-      run: docker push ${{ secrets.DOCKER_USERNAME }}/GL4-devops-tesnime-sebei
+      run: docker push ${{ secrets.DOCKER_USERNAME }}/gl4-devops-tesnime-sebei
