@@ -15,7 +15,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag the-event:$(date +%s)
+      run: docker build . --file Dockerfile --tag gl4-devops-tesnime-sebei:$(date +%s)
 
     - name: Log in to Docker Hub
       env:
