@@ -62,8 +62,9 @@ the service will be started on http://localhost:8000 , you can access the differ
    the body is a json object containing the type and price of the ticket. Check this example: 
    ```json
    {
-	"type": "smart pass",
-	"price": 99.00
+	"type": "smartpass",
+	"price": 99.00,
+	"available_tickets": 100
    }
    ```
  - GET: /users:  (user authentication required)
@@ -71,6 +72,12 @@ the service will be started on http://localhost:8000 , you can access the differ
    returns an array of users, each user object has its username and email
     ```
     http://localhost:8000/users
+    ```
+ - GET: /buy_ticket:  (user authentication required)
+ 
+   Receives the type of ticket to be bought as a query param and reserves a ticket for the user if the specified type of tickets is still available.
+    ```
+    http://localhost:8000/buy_ticket?ticket_type=smartpass
     ```
     
 ## CI/CD Pipeline
@@ -98,4 +105,11 @@ The `venv` folder containing our dependencies should be added to the .dockerigno
 To publish the docker image to docker hub every time we push new changes, a github action was created.
 
 ## Testing
-Todo
+The test files can be found under the folder `test`, this folder contains two types of tests:
+### Unit tests:
+- Testing the `manage_tickets`function: this function is responsible of assigning a ticket to the user and decreasing the number of available tickets, if no tickets are available it should return None.
+- Testing the `buy_tickets` view: testing this view covers the following cases:
+  - if `ticket_type` is not provided return a 400_bad_request code 
+  - if `ticket_type` is provided and the `ticket_type` does not exist in the db return a 404_not_found code 
+  - if `ticket_type` is provided, exists in the db but there are no more tickets available return a 404_not_found code
+  - if `ticket_type` is provided, exists in the db and tickets are available return a 200_success code
