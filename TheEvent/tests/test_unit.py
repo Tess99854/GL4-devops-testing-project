@@ -16,4 +16,6 @@ class TestUtility(TestCase):
     def test_buy_available_ticket(self):
         ticket = Ticket.objects.create(type='testType1', price=random.randint(20, 200), available_tickets=100)
         manage_tickets(ticket, self.user)
-        self.assertEqual(True, False)
+        self.assertEqual(ticket.available_tickets, 99)
+
+
