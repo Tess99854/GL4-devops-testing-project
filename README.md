@@ -1,4 +1,13 @@
-# the-event
+# Devops/Testing Project
+
+## Overview
+This is a rest API built with Django, that includes Unit Testing, Integration testing and end-to-end testing as well as a CI/CD pipeline.
+The fellowing REAMDE page will cover the following sections: 
+- [Documentation](#documentation)
+- [CI/CD pipeline](#cicd-pipeline)
+- [Testing](#testing) 
+
+## Documentation
 
 To start the API make sure you have python and pip installed 
 
@@ -19,7 +28,7 @@ the service will be started on http://localhost:8000 , you can access the differ
   http://localhost:8000/register 
   ```
   the body is a json object containing the username, email and password. Check this example: 
-  ```
+  ```json
   {
     "username": "john",
     "email": "john@email.com",
@@ -31,7 +40,7 @@ the service will be started on http://localhost:8000 , you can access the differ
   http://localhost:8000/login 
   ```
   the body is a json object containing the username, and password (it is possible to login using the email by passing the email in the username field)
-  ```
+  ```json
   {
     "username": "john@email.com",
     "password": "bestPasswordEver"
@@ -49,8 +58,9 @@ the service will be started on http://localhost:8000 , you can access the differ
    ```
    http://localhost:8000/add_ticket
    ```
+   
    the body is a json object containing the type and price of the ticket. Check this example: 
-   ```
+   ```json
    {
 	"type": "smart pass",
 	"price": 99.00
@@ -62,3 +72,30 @@ the service will be started on http://localhost:8000 , you can access the differ
     ```
     http://localhost:8000/users
     ```
+    
+## CI/CD Pipeline
+Worked on the dockerization of the API using the following Dockerfile: 
+```dockerfile
+FROM python:3-alpine
+
+WORKDIR /usr/src/app
+
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+RUN pip install --upgrade pip 
+COPY ./requirements.txt .
+RUN pip install -r requirements.txt
+
+COPY . .
+
+EXPOSE 8000
+
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+```
+
+The `venv` folder containing our dependencies should be added to the .dockerignore file.
+To publish the docker image to docker hub every time we push new changes, a github action was created.
+
+## Testing
+Todo
