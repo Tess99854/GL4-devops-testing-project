@@ -108,8 +108,14 @@ To publish the docker image to docker hub every time we push new changes, a gith
 The test files can be found under the folder `test`, this folder contains two types of tests:
 ### Unit tests:
 - Testing the `manage_tickets`function: this function is responsible of assigning a ticket to the user and decreasing the number of available tickets, if no tickets are available it should return None.
+### Integration tests:
 - Testing the `buy_tickets` view: testing this view covers the following cases:
   - if `ticket_type` is not provided return a 400_bad_request code 
   - if `ticket_type` is provided and the `ticket_type` does not exist in the db return a 404_not_found code 
   - if `ticket_type` is provided, exists in the db but there are no more tickets available return a 404_not_found code
   - if `ticket_type` is provided, exists in the db and tickets are available return a 200_success code
+
+You can run the test using the folliwng command:
+```shell
+python manage.py test TheEvent
+```
